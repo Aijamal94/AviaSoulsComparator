@@ -1,10 +1,8 @@
-package ru.netology;
+package ru.netology.ticket;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
-import java.util.Arrays;
-import java.util.Comparator;
 
 public class AviaSouls {
     private Ticket[] tickets = new Ticket[0];
@@ -22,6 +20,18 @@ public class AviaSouls {
         tickets = addToArray(tickets, ticket);
     }
 
+    public void remove(Ticket ticket) {
+        Ticket[] tmp = new Ticket[tickets.length - 1];
+        int index = 0;
+        for (Ticket t : tickets) {
+            if (!t.equals(ticket)) {
+                tmp[index] = t;
+                index++;
+            }
+        }
+        tickets = tmp;
+    }
+
     public Ticket[] findAll() {
         return tickets;
     }
@@ -33,15 +43,18 @@ public class AviaSouls {
                 result = addToArray(result, ticket);
             }
         }
+        Arrays.sort(result);
         return result;
     }
 
     public Ticket[] searchAndSortBy(String from, String to, Comparator<Ticket> comparator) {
-        Ticket[] result = search(from, to);
+        Ticket[] result = new Ticket[0];
+        for (Ticket ticket : tickets) {
+            if (ticket.getFrom().equals(from) && ticket.getTo().equals(to)) {
+                result = addToArray(result, ticket);
+            }
+        }
         Arrays.sort(result, comparator);
         return result;
-    }
-
-    public void remove(Ticket ticket1) {
     }
 }
