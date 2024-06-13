@@ -2,13 +2,13 @@ package ru.netology.ticket;
 
 import java.util.Objects;
 
-public class Ticket implements Comparable<Ticket> {
-    private String from; // аэропорт откуда
-    private String to; // аэропорт куда
-    private int price; // цена
-    private int timeFrom; // время вылета (по москве)
-    private int timeTo;// время прилёта (по москве)
 
+public class Ticket implements Comparable<Ticket> {
+    private String from;
+    private String to;
+    private int price;
+    private int timeFrom;
+    private int timeTo;
 
     public Ticket(String from, String to, int price, int timeFrom, int timeTo) {
         this.from = from;
@@ -38,14 +38,21 @@ public class Ticket implements Comparable<Ticket> {
         return timeTo;
     }
 
+    @Override
+    public int compareTo(Ticket other) {
+        return Integer.compare(this.price, other.price);
+    }
 
-    // Вспомогательные методы для корректной работы equals
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ticket ticket = (Ticket) o;
-        return price == ticket.price && timeFrom == ticket.timeFrom && timeTo == ticket.timeTo && from.equals(ticket.from) && to.equals(ticket.to);
+        return price == ticket.price &&
+                timeFrom == ticket.timeFrom &&
+                timeTo == ticket.timeTo &&
+                Objects.equals(from, ticket.from) &&
+                Objects.equals(to, ticket.to);
     }
 
     @Override
@@ -54,13 +61,13 @@ public class Ticket implements Comparable<Ticket> {
     }
 
     @Override
-    public int compareTo(Ticket o) {
-        if (this.price < o.price) {
-            return -1;
-        } else if (this.price > o.price) {
-            return 1;
-        } else {
-            return 0;
-        }
+    public String toString() {
+        return "Ticket{" +
+                "from='" + from + '\'' +
+                ", to='" + to + '\'' +
+                ", price=" + price +
+                ", timeFrom=" + timeFrom +
+                ", timeTo=" + timeTo +
+                '}';
     }
 }
